@@ -1,0 +1,114 @@
+<html>
+    <head>
+
+    </head>
+    <body>
+        <!-- <h1 id="h11"> 요기입니다. </h1>
+        <h1 id="h12"> 여기일까? </h1>
+        <h1 id="h13"> 여긴가? </h1> -->
+        <h1 id="grade"></h1>
+        <script>
+            
+            // * querySelector
+            // h1 태그가 여러 개일 때 특정 태그를 선택하고 싶을 땐 태그의 id 를 사용하여 # 뒤에 id를 적어 특정 태그를 지정
+            // 만약 여러 개의 태그가 있을 때 id 와 같은 특징없이 단순 querySelector 실행 시 제일 위의 태그에 대해서만 적용
+            // ex ) h1 태그 a, b, c 가 있고 id 가 존재하지 않는다면 a 를 선택
+            // document.querySelector('h1#h12').textContent = userMsg;
+
+            // h1 태그에 대해 전체 선택
+            // const allh1 = document.querySelectorAll('h1'); // h1 태그들에 대한 집합을 반환 
+            // // forEach 는 집합들을 저장할 배열과 index 변수를 지정하면 이를 각각 설정할 수 있다.
+            // // => 을 통해 가져오게 되고 이를 {} 안의 동작으로 수행
+            // allh1.forEach((elem, index) => {elem.textContent = userMsg; } ); 
+
+            // // prompt 로 받은 숫자가 짝수인지 홀수 인지 판별하여 h1 태그에 출력
+            // const userNumber = parseInt(userMsg); // 사용자 입력 문자열 ----> 정수
+
+            // const result = userNumber % 2;
+            
+            // let msg = "";
+            // if (result == 1){ // 홀수
+            //     msg = userMsg + '홀수입니다.'
+            // }
+            // else{ // 짝수
+            //     msg = userMsg + '짝수입니다.'
+            // }
+            // document.querySelector('h1#h11').textContent = msg;
+            
+
+
+            // * boolean
+            // let k = true;
+            // k = false;
+
+            // * 비교 연산자
+            // <, >, <=, >= ,==, ===, !=, !==
+            console.log('1 == 1 : ' + (1 == 1)); // true
+            // JS가 자동으로 서로 같은 자료형을 형변환을 시켜서 의도치 않은 동작이 될 수 있다.
+            console.log('\'1\' == 1 :' + ('1' == 1)); // ture
+            
+
+            console.log('1 === 1 : ' + (1 === 1)); // true
+            // 데이터 형까지 같은지를 비교, 그래서 같다라는 표현은 === 로 사용하는 것이 좋다.
+            console.log('\'1\' === 1 :' + ('1' === 1)); // false
+
+
+            // 자동 형변환
+            console.log('1 != 1 : ' + (1 != 1)); // false
+            console.log('\'1\' != 1 :' + ('1' != 1)); // false
+            
+            // 데이터 형까지 비교
+            console.log('1 !== 1 : ' + (1 !== 1)); // false
+            console.log('\'1\' !== 1 :' + ('1' !== 1)); // true
+
+            // 문자열 비교 , 사전순
+            console.log('ack < abk : ' + ('ack' < 'abk')); // false
+            console.log('apple < banana : ' + ('apple' < 'banana')); // true
+
+            
+
+            // * undefined, null
+            let k; // 초기화를 하지 않으면 undefined 로 찍힌다.
+            console.log('k is : ' + k); // undefined 라고 출력됨
+
+            let x = null; // 초기화했지만, null 값을 넣었음.
+            console.log('x is : ' + x); // null 로 출력
+
+
+
+            // * if
+            // 입력받은 점수 범위에 따라 등급을 h1, id = grade 태그에 출력
+            const score = parseInt(prompt());
+
+            if (score >= 90){
+                document.querySelector('h1#grade').textContent = 'A';
+            }
+            else if (score >= 80){
+                document.querySelector('h1#grade').textContent = 'B';
+            }
+            else {
+                document.querySelector('h1#grade').textContent = 'C';
+            }
+
+            // * switch
+            // 입력받은 점수에 따라 h1, id = grade 태그에 출력
+            switch(score) {
+                case 100:
+                    document.querySelector('h1#grade').textContent = '완벽';
+                    braek;
+                case 90:
+                    document.querySelector('h1#grade').textContent = '충분';
+                    break;
+                default:
+                    document.querySelector('h1#grade').textContent = '나머지';
+            }
+
+
+            // * 삼항 연산자
+            // 50 ---> pass, otherwise --> fail
+            const msg = (score >= 50) ? 'pass' : 'fail' ; // () ? A : B , () 가 true 면 A 실행 false 면 B 실행
+            document.querySelector('h1#grade').textContent = msg;
+            
+        </script>
+    </body>
+</html>

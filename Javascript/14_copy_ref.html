@@ -1,0 +1,185 @@
+<html>
+    
+    <head>
+
+    </head>
+
+    <body>
+        
+        <script>
+
+            // Copy (복사)
+
+            // 1. Shallow Copy
+
+            // 2. Depp Copy
+
+            // Reference (참조)
+
+
+
+
+            let a = 1;
+            let b = a;
+            // a를 복사해서 b 에 대입 (Copy)
+            // a도 자기 공간에 1, b 도 자기 공간에 1
+            b = 10;
+
+            console.log(`a is ${a}`);
+            // console.log('b is ', b)
+            // 바로 변수를 출력하고 싶다면 `` backtick 으로 묶고 ${} 안에 변수를 적어준다.
+            console.log(`b is ${b}`);
+            // b 는 a 를 복사한 것이기 때문에 b 를 수정해도 a 는 수정되지 않는다.
+            // : int와 char 같은 primitive type 은 복사가 된다.
+
+
+
+            // object : key, value
+            const c = {'name' : 'alice', 'age' : 20};
+            const d = c;
+            
+            console.log('before : ', c);
+
+            //b['name']
+            d.name = 'tom'
+            // const 로 선언했음에도 문제가 생기지 않는 이유는
+            // d 와 c 가 다른 객체를 가리키는 것이 아닌 같은 객체를 가리키는 상태에서 
+            // 객체 안의 내용을 수정한 것이기 때문에 허용된다.
+
+
+            console.log('after : ', c);
+            // c 를 건드리지 않고 d 를 변경해는 데도 c 가 변경됨
+            // d = c , 로 복사(Copy)가 된 것이 아닌 참조(Reference)가 되었다.
+            // : object 는 참조가 된다.
+
+            
+
+            // array
+            const e = [1, 2, 3];
+            const f = e;
+
+            console.log('before ', e);
+            f[1] = 200;
+
+            console.log('after ', e)
+            e.forEach((v, idx) => {
+                console.log(`${idx} : ${v}`);
+            });
+            // e 를 건드리지 않고 f 를 변경했는 데도 f 가 변경됨
+            // : array 는 참조가 된다.
+
+
+            
+            // Shallow Copy
+            // array 와 object 를 복사하여 할당하는 법
+            const g = [1, 2, 3];
+            const h = [...g]; // copy로 가져온다.
+
+            h[1] = 200;
+
+            console.log(g);
+            // 복사 되어 h 에 array 를 할당했기 때문에 h 를 수정해도
+            // g 는 수정되지 않는다.
+
+            const i = {
+                name : 'john',
+                age : 20
+            };
+            console.log('i : ', i.name, i['age']);
+
+            // Object.assign(객체, 복사할 객체) : 객체에 복사할 객체의 속성과 값을 복사하여 할당한다.
+            const j = Object.assign({}, i); // 빈 객체에 i 의 속성을 복사하여 할당
+            j.name = 'alice';
+            console.log('after---------------');
+            console.log('i : ', i.name, i['age']);
+            console.log('j : ', j.name, j['age']);
+
+            const k = {
+                name : 'john',
+                age : 20,
+                address : {
+                    city : 'incheon'
+                }
+            };
+
+            console.log(k.address.city);
+            const l = Object.assign({}, k);
+            l.name = 'alice';
+            l.address.city = 'seoul';
+            console.log('after--------------');
+            console.log('k : ',k.name, k.address.city);
+            console.log('l : ',l.name, l.address.city); 
+            // name 은 서로 복사한 것이기 때문에 다르지만
+            // address city 는 서로 같은 상태
+
+            // Object.assign 으로 객체를 복사해왔지만
+            // k 와 l 이 공통된 address 객체를 가지는 이유는
+            // Object assing 은 복사할 객체의 primitive type 은 복사해주지만
+            // object type 은 복사해주지 않기 때문에 copy 가 되지 않고 reference 가 된다.
+            // Object.assign로 object 안에 object 는 복사할 수 없다.
+            // 이를 위한 Dee Copy 가 필요하다. 
+
+
+
+
+            // Object Deep Copy
+            const m = {
+                name : 'john',
+                age : 20,
+                address : {
+                    city : 'incheon'
+                }
+            };
+            
+            // JSON : JS 사용하는 객체 표현방식, 문자열 키-값 쌍으로 표현
+            // JS object 를 모두 꺼내서 문자열 표시방식으로 나타낸 것
+            // 하나의 object 를 다른 object 로 전송할 때
+            // 문자열 키-값 으로 변환하여 보내기 위해 사용
+            // ex JSON 은 {'name' : 'bob', 'age' : '20'} 와 같이 표현
+            const n = JSON.parse(JSON.stringify(m))
+            // stringify 는 보낼 객체를 전부 문자열 쌍으로 만드는 것
+            // parse 는 받은 문자열 쌍을 다시 새로운 객체로 만드는 것
+
+            n.name = 'alice';
+            n.address.city = 'seoul';
+            console.log('after--------------');
+            console.log('m : ',m.name, m.address.city);
+            console.log('l : ',n.name, n.address.city); 
+            // Copy 이기 때문에 m 과 n 의 name, city 가 모두 다름
+
+
+
+            // array Deep Copy
+            const o = ['alice', 20, {city : 'incheon', street : 10}];
+            console.log('before-------------');
+            console.log(o[0],o[1],o[2].city,o[2].street);
+
+            // const p = [...o]; // shallow copy
+
+            // p[0] = 'john';
+            // p[1] = 20000;
+            // p[2].city = 'seoul';
+            // p[2].street = 555;
+
+            // console.log('after-------------');
+            // console.log(o[0],o[1],o[2].city,o[2].street);
+            // console.log(p[0],p[1],p[2].city,p[2].street);
+            // shallow copy 로 배열 안의 객체는 복사되지 않고 참조되었다.
+
+
+            const p = JSON.parse(JSON.stringify(o)); // shallow copy
+
+            p[0] = 'john';
+            p[1] = 20000;
+            p[2].city = 'seoul';
+            p[2].street = 555;
+
+            console.log('after-------------');
+            console.log(o[0],o[1],o[2].city,o[2].street);
+            console.log(p[0],p[1],p[2].city,p[2].street);
+            // Deep copy로 인해 배열 안에 객체까지 모두 복사되었다.
+        </script>
+
+    </body>
+
+</html>

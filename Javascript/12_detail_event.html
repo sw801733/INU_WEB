@@ -1,0 +1,133 @@
+<html>
+    <head>
+
+    </head>
+    <body>
+        
+        <div id="outside"> <!-- 0번쨰 div -->
+            <div> <!-- 1번쨰 div -->
+                <input id="i1" type="checkbox">
+                <label for="">운동</label>
+            </div>
+            <div> <!-- 2번쨰 div -->
+                <input type="checkbox">
+                <label for="">쇼핑</label>
+            </div>
+
+        </div>
+
+        <script>
+            // input 에 대한 eventListener
+            const inputs = document.querySelectorAll('input');
+            inputs.forEach( (_ip, _idx)=> {
+                _ip.addEventListener('click', () => {
+                    console.log(_idx +' input click event 발생')
+                });
+            });
+
+
+            inputs.forEach( (_ip, _idx)=> {
+                _ip.addEventListener('click', () => {
+                    console.log(_idx +' 2번째 event 발생')
+                });
+            });
+
+            // div 에 대한 eventListener
+            const divs = document.querySelectorAll('div');
+            divs.forEach( (_dv, _idx) => {
+                _dv.addEventListener('click', () => {
+                    console.log(_idx + ' div 에 대한 event 발생')
+                });
+            });
+            // checkbox 가 1번 쨰 div 보다 먼저 출력되는 이유
+            // 1 번째 div 가 0 번째 div 보다 먼저 출력되는 이유
+
+
+
+
+            // (event) * capture phase
+            // 이벤트가 발생했을 때 해당 event 가 발생한 부분을 찾아 바깥에서 안쪽으로 찾아가는 과정이다.
+            // event 가 발생한 부분을 안으로 들어가면서 찾아내는 것을 target pahse 라고 하며
+            // target 으로부터 다시 바깥으로 돌아가는 (귀환) 것을 bubble phase 라고 한다.
+            // 즉 event : capture -> target -> bubble 의 단계로 이뤄진다.
+            // 이때 EventListener 는 bubble phase 과정에서 호출되므로 역순으로 출력되었던 것이다.
+
+            // * stop propagation
+            // 설정한 구역에서 올라오는 bubble phase 진행을 멈춘다.
+            // event.stopPropagation() 은 현재 나와 같은 레벨에 걸려있는 EventListener 를 제외한
+            // 위로 올라갈려는 것을 중지시키지만
+            // event.stopImmediatePropagation() 은 현재 나와 같은 레벨에 걸려있는 EventLister 까지
+            // 모두 중지시킨다.
+
+            // 아래에 예시로 inputs 에 대한 EventListener 가 2개가 걸려있는 상황이다.
+            // 여기서 event.stopPropagation()를 사용하면
+            // 2번째 EventListener는 중지시킬 수 없기 때문에
+            // console.log(_idx +' 2번째 event 발생') 이 실행된다.
+
+            // 그러나 event.stopImmediatePropagation() 를 사용하면
+            // 2번째 EventListener 까지 중지시키기 때문에
+            // console.log(_idx +' 2번째 event 발생') 를 실행하지 않는다.
+
+            // const inputs = document.querySelectorAll('input');
+            // inputs.forEach( (_ip, _idx)=> {
+            //     // bubble phase에서 수행되는 listener
+            //     _ip.addEventListener('click', () => {
+            //         console.log(_idx +' bubble phase: input에 대한 event 발생')
+            //         event.stopPropagation();
+            //         // event.stopImmediatePropagation();
+            //     }); 
+            //     // capture phase에서 수행되는 listener
+            //     _ip.addEventListener('click', () => {
+            //         console.log(_idx +' capture phase: input에 대한 event 발생')
+            //     }, true); 
+            // });
+
+            // const divs = document.querySelectorAll('div');
+            // divs.forEach( (_ip, _idx)=> {
+            //     // bubble phase에서 수행되는 listener
+            //     _ip.addEventListener('click', () => {
+            //         console.log(_idx +' bubble phase: div 에 대한 event 발생')
+            //     });
+            //     // capture phase에서 수행되는 listener
+            //     _ip.addEventListener('click', () => {
+            //         console.log(_idx +' capture phase: div 에 대한 event 발생')
+            //     }, true); 
+            // });
+
+
+            // inputs.forEach( (_ip, _idx)=> {
+            //     _ip.addEventListener('click', () => {
+            //         console.log(_idx +' 2번째 event 발생')
+            //     });
+            // });
+
+            
+
+
+            // * event delegation, 이벤트 위임
+            // capture 와 bubble 을 거쳐 올라온 맨 위에 대해서만 이벤트가 발생한 것으로 위임하겠다.
+            // 위의 상황에서는 div 0 번째에 이벤트 위임
+            // 하위 child 에 대해서 listener 를 걸지 않고도 위의 상위 parent 에 listener를 걸어놓음으로써
+            // 어떤 child 에서 event가 발생했는지도 탐지가 가능
+
+            // div 0 번째 아래 모든 요소에서의 event 감지를 위한 listener
+            const cp_div = document.querySelector('#outside');
+            cp_div.addEventListener('click', (event) => {
+                // 실제 event 가 걸린 target 의 tagName 출력
+                console.log('cp event 발생 : ----> ', event.target.tagName); // INPUT
+                
+                // Listener 를 맨 위 div 에 걸었지만 Input 에서 발생한 event 를 감지할 수 있다.
+                // == parent 에 Listener 를 걸면 그 밑 child 에서 발생한 event들도 알 수 있다.
+
+            });
+
+            // child 중에서 운동에 대한 event 처리를 위한 listener
+            cp_div.addEventListener('click', (event) => {
+                if (event.target.id === 'i1') { // 어떤 곳에서 event 가 발생했는지도 확인가능
+                    console.log('운동')
+                }
+            });
+        </script>
+
+    </body>
+</html>

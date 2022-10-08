@@ -1,0 +1,107 @@
+<html>
+    <head>
+
+    </head>
+    <body>
+
+        <script>
+
+            // Object : 정보의 집합
+            // Class : create object
+
+
+            const o = {
+                name : 'tom',
+                age : 20
+            };
+
+            const j = {
+                name : 'jane',
+                age : 24
+            };
+
+            // 다른 정보를 저장하기 위해
+            // Object 를 반복해서 생성해야 하는 과정이 필요하다. ==> Class
+
+            'use strict' // 지금부터 사용하는 JS 의 문법을 엄격하게, JS 가 너무 유연하기 때문에
+
+            // const k = 10;
+
+            // y = 10; 
+            // y 를 선언한 줄 알고 사용했으나 use strict 없이는 코드가 가능하다.
+            // 이와 같은 현상을 막고 오류에 대해선 코드가 동작하지 않도록한다.
+
+            class Person {
+                constructor(_name, _age) {
+                    this.name = _name;
+                    this.age = _age;
+                    // this.name 과 name 은 다르다.
+                    // this. 는 Class 안에 있는 공간을 나타냄
+                };
+
+                // method
+                add_city_info(_city) {
+                    this.city = _city; // attribute or field 추가 하기
+                    // c++ 과 같은 언어에서는 불가능 하지만
+                    // JS 에서는 메서드 안에서도 attribute (field) 를 추가 가능
+                    // 그러나 가독성이 떨어진다.
+                }
+
+                show_info() {
+                    console.log(`${this.name} is ${this.age} years old. He(She) lives in ${this.city}`);
+                }
+
+                is_older_than(value) {
+                    if (this.age > value) {
+                        return true;
+                    }
+                    else {
+                        return false;
+                    }
+                }
+            };
+
+            // inheritance, 상속
+            // 여러 부모에 대한 상속은 불가
+            class Student extends Person {
+                constructor(_name, _age, _dream) {
+                    super(_name, _age);
+                    // 상속한 Person의 constructor 를 super로 가리킨다.
+                    this.dream = _dream; 
+                }
+                show_info() {
+                    // Person 의 메서드 show_info를 가리켜 이를 실행하고
+                    // 거기다 동작을 추가한다.
+                    super.show_info();
+                    console.log(`His(Her) dream is ${this.dream}`);
+                }
+            }
+
+            const p = new Person('jim', 20);
+            const q = new Person('jane', 21);
+            // const q = {
+            //     name : 'jane',
+            //     age : 21
+            // }; // 와 같은 의미의 동작
+            
+            const s = new Student('tom', 19, 'pilot');
+            s.add_city_info('incheon');
+            // 상속 받았기 때문에 Peson의 메서드도 전부 사용 가능하다.
+            
+            // Overriding
+            s.show_info();
+            // Parent Class 인 Person 에도 show_info 가 실행되는 것이 아닌
+            // Child Class 인 Person 에 있는 show_info 를 실행하는 것
+   
+
+            // p.add_city_info('Busan')
+            // p.show_info();
+            // console.log(`${p.name} is older than 19?`); 
+            // console.log(p.is_older_than(19)); 
+            
+            
+
+        </script>
+
+    </body>
+</html>

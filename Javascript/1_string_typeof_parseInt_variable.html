@@ -1,0 +1,63 @@
+<html>
+    <head>
+
+    </head>
+    <body>
+        <h1 id='h11'>여기입니다.</h1>
+        <h1 id='h12'>요기일까?</h1>
+        <h1 id='h13'>여긴가?</h1>
+        <!-- javascript 표현을 위한 태그 : script -->
+        <!-- web browser (chrome) 에 script를 수행하는 엔진을 통해 javascript 를 동작하도록 한다. -->
+        <script>
+            
+            // 1. 출력 : chrome --> 개발자도구 --> console 으로 출력
+            
+            // 문자열을 나타내는 3가지 표현
+            // console.log("이것은 자바스크립트 입니다."); // "" 사용
+            // console.log('이것은 자바스크립트 \n입니다.'); // '' 사용 줄바꿈을 위해선 \n 을 사용
+            // console.log(`이것은 자바스크립트 입니다.
+            
+            // `); // `` 사용 back-tick back-tick 안에 들어있는 문자열은 엔터나 떨어진 문자열을 그대로 나타낸다.
+
+            // 문자열의 연결은 '+' 사용 , '+' string을 연결해서 붙이는 연산자. string concatenation operator
+
+            // 2. typeof : 자료형 이름
+            // console.log('hello 의 자료형은' + typeof("hello")); // string
+            // console.log('4의 자료형은' + typeof("4")); // number
+            // console.log('3.14의 자료형은' + typeof("3.14")); // number 정수, 실수 에 상관없이 모두 number 로 표현
+
+            // console.log('string concat의 문자열 더하기 숫자 결과는' + ('123' + 5)); // 5를 자동으로 string 으로 변환하여 둘을 연결하여 표현
+
+            // 3. parseInt, 형변환
+            // '123' + 5 --> 128이기 바랄 때
+            // parseInt : 문자열을 숫자로 바꿔주는 함수 , 문자열 ---> 정수
+            // parseInt('123'); // '123' ---> 123
+            console.log('parseInt의 결과는 ' + (parseInt('123') + 5));
+            console.log('parseInt의 결과는 ' + parseInt('123') + 5); // 정수 더하기에 대한 연산을 미리하지 못해서 'parseInt의 ~' 에 의해 parseInt('123') 이 문자열로 바뀌었다.
+
+            // 변수 variable
+            // const : 한 번 대입하면, 변경불가
+            // let : 일반 변수
+            // const a = 1; // 만약 이후 a = 2 로 값 변경 시 에러방생
+
+            // let b = 1;
+            // console.log('b의 초기값 : ' + b);
+            // b = 2;
+            // console.log('b의 변경값 : ' + b);
+
+            let a = 10;
+            let b = 20;
+            let c = a + b;
+            const d = a * 10;
+            // 제곱
+            const e = 2 ** 3; // 2의 3승 ,** : 제곱
+            
+            // 입력
+            const userMsg = prompt(); // 입력 창을 통해 사용자가 입력
+            console.log('사용자가 입력한 메세지는 ' + userMsg); // debugging 용도
+            document.querySelector('h1').textContent = userMsg; // 전체 문서 document 에서 h1 태그를 찾는다. 그 중에서 textContent 를 찾아 이를 userMsg로 바꾼다.
+            
+
+        </script>
+    </body>
+</html>

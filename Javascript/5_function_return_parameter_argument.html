@@ -1,0 +1,84 @@
+<html>
+    <head>
+
+    </head>
+    <body>
+
+        <h1 id="grade"></h1>
+        <script>
+
+            // * function
+            // function parameter ---> 함수 선언
+            // function argument  ---> 함수 호출
+            
+
+            // 함수 만드는 방법 첫번째
+            function sayHello() {
+                console.log('안녕하세요');
+            }
+
+            function sayHelloWithParameter(name) {
+                console.log(name + '씨, 안녕하세요');
+            }
+
+            sayHello();
+            sayHelloWithParameter('찰스');
+
+            // 함수 만드는 방법 두번째 : arrow(=>) function
+            // 변수에 함수를 할당할 수 있다.
+            const k = () => { console.log('안녕하세요2'); }
+            const k2 = (name) => { console.log(name + '씨, 안녕하세요'); }
+            // 함수 호출
+            k();    
+            k2('찰수');
+
+
+            // 함수 만드는 방법 세번째
+            const v = function() { console.log('안녕하세요3'); }
+            const v2 = function(name) { console.log(name + '씨, 안녕하세요3'); }
+            v();
+            v2('찰스');
+
+
+
+            // * return
+
+            // 반환값이 없는 함수에 대해서 반환값은 undefined 가 된다.
+            console.log('sayHello 의 반환값 : ' + sayHello());
+        
+            function sayHelloWithReturn() {
+                console.log('안녕하세요');
+
+                return 'bye';
+            }
+            console.log('sayHello 의 반환값 : ' + sayHelloWithReturn());
+
+            // JS 에서 함수의 반환값은 하나만 되어야 하지만 여러 개를 반환해주고 싶은 경우 array를 이용
+            function sayHelloWithMultipleReturn() {
+                console.log('안녕하세요');
+
+                return ['bye', 10, false];
+            }
+            const res = sayHelloWithMultipleReturn();
+            console.log('sayHello 의 반환값 : ' + res[1]);
+
+
+            // * parameter vs arguments
+
+            function sayHelloWithMultipleParameter(name, age) {
+                console.log(age + '살 ' + name + '씨, 안녕하세요');
+            }
+            // parameter의 개수가 맞지 않아도 알아서 처리, 많으면 개수가 맞는 부분까지 사용, 적게 적으면 undefined로 처리
+            console.log(sayHelloWithMultipleParameter('찰스', 20, false)); // false 는 처리 X
+            console.log(sayHelloWithMultipleParameter('찰스')); // age 는 undefined , parameter는 함수 선언 시 undefined로 되어있다가 인자를 넘겨주었을 때 overwrite 되는 것으로
+                                                                // 순서를 따지자면 parameter 들은 이미 undefined로 되어있다.
+
+            function sayHelloWithArrayParameter(values) {
+                console.log(values[1] + '살 ' + values[0] + '씨, 안녕하세요');
+            }
+            console.log(sayHelloWithArrayParameter(['찰스', 20]));
+
+
+        </script>
+    </body>
+</html>

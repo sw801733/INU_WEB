@@ -1,0 +1,24 @@
+<html>
+    <head>
+        
+        <!-- JS 파일을 가리킴, html 과 JS 를 분리해서 사용 -->
+        <!-- defer : 연기하다. -->
+        <!-- Web Server 에서 Web Browser 로 html 파일을 보내서 실행할 때 파일안에 있는
+        html과 JS 를 동시에 다운받고 (읽고) html은 화면에 보여주기 위핸 Rendering 과정을 JS 를 Run 을 하게 되는데
+        JS 의 다운이 너무 빠른 나머지 Rendering 이 되기 전에 Run이 될 경우 Web 페이지에 오류가 발생할 수 있다. 이를 막고자
+        Rendering 까지 끝난 후 JS 를 RUN 하기 위해 defer 옵션을 추가한다. -->
+        <script src="promise.js" defer></script>
+    
+    </head>
+
+    <body>
+    
+        <h1>
+            Hello
+        </h1>
+
+
+    </body>
+
+
+</html>

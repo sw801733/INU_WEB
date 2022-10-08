@@ -1,0 +1,53 @@
+<html>
+    <head>
+
+    </head>
+    <body>
+
+        <div>
+            <h1 id="count_down"></h1>
+        </div>
+        
+        <script>
+            
+            // * setTimeout : 일정 시간 후에 실행
+
+            const hello = () => {console.log('hello')};
+            // 함수의 이름을 써야하므로 hello() 로 호출하는 것은 옳지 않음
+            //setTimeout(hello, 3000); // 단위는 밀리세컨드 1/1000초 후에 실행
+            
+            setTimeout(() => {
+                console.log('화살 함수, 안녕');                
+            }, 3000);
+
+            // * setInterval : 일정 주기로 실행
+            // 무한 반복이 되므로 이를 막고자
+            // clearInterval 로 주기 함수를 종료한다.
+            // setInterval 이 특정한 id 를 반환하는 것을 이용해 이를 clearInterval의 인자로 넘겨준다.
+            
+            // 1초 간격으로 hello 가 실행되다가 setTimeout 에 의해 10초 후 clearInterval을 실행
+            // const _id = setInterval(hello, 1000); 
+            // setTimeout(() => {
+            //    clearInterval(_id); 
+            //    console.log('clearInterval 호출되었음');
+            // }, 10000);
+
+            
+            // 웹페이지에 10,9,8...1 로 1초에 하나씩 감소하는 걸 보여주다
+            // 0 이 되면 Done 을 보여준다.
+            let timer = 10;
+            const _id = setInterval(() => {
+                const cp_h1 = document.querySelector('#count_down');
+                cp_h1.textContent = timer;
+                timer = timer - 1;
+                if (timer < 0) {
+                    clearInterval(_id);
+                    cp_h1.textContent = 'Done';
+                }
+            }, 1000);
+
+
+        </script>
+
+    </body>
+</html>

@@ -1,0 +1,150 @@
+<html>
+    <head>
+        <style>
+            table {
+                /* border 간의 간격을 없앤다. border 를 겹처서 표현*/
+                border-collapse: collapse;
+            }
+            td {
+                width: 50px;
+                height: 50px;
+                border: 3px solid black;
+            }
+        </style>
+    </head>
+    <body>
+        
+        <!-- html 방법 -->
+        <!-- table 은 td로 이뤄진 tr(table row) 의 집합이라 할 수 있다. -->
+        <!-- css 로 td 의 크기를 정해주지 않아 처음에은 페이지에 나타나지 않음 -->
+        <!-- 일일이 table 을 생성하는 수동방법말고 JS 로 한번에 설정가능 -->
+        <!-- <table>
+            <tr><td></td><td></td><td></td></tr>
+            <tr><td></td><td></td><td></td></tr>
+            <tr><td></td><td></td><td></td></tr>
+        </table>
+        <div id="result">결과표시</div> -->
+        
+        <!-- Javascript 방법 -->
+        <script>
+            
+            // table 과 div 와 같은 요소를 직접 만듬
+            const cp_table = document.createElement('table');
+            const cp_result = document.createElement('div');
+
+            // td 위치를 기준으로 승패를 판단
+            const checkWin = (_td) => {
+                // td 는 tr 안에 있으므로 tr 의 행 인덱스를 가져옴
+                let rowIndex = _td.parentNode.rowIndex;
+                // td 에 해당하는 cell 인덱스를 가진 celIndex 로 가져옴
+                let colIndex = _td.cellIndex;
+
+                // 가로 검사    
+                if (board[rowIndex][0].textContent === mark && 
+                    board[rowIndex][1].textContent === mark &&
+                    board[rowIndex][2].textContent === mark) {
+                        return true;
+                }
+                // 세로 검사
+                if (board[0][colIndex].textContent === mark && 
+                    board[1][colIndex].textContent === mark &&
+                    board[2][colIndex].textContent === mark) {
+                        return true;
+                }
+                // 대각선 검사, back-slash
+                if (board[0][0].textContent === mark &&
+                    board[1][1].textContent === mark &&
+                    board[2][2].textContent === mark) {
+                        return true;
+                }
+                // 대각선 검사, slash
+                if (board[0][2].textContent === mark &&
+                    board[1][1].textContent === mark &&
+                    board[2][0].textContent === mark) {
+                        return true;
+                }
+                return false;
+            };
+
+            // 페이지 table 의 'O' 'X' 를 표시하고 게임이 이겼는지 확인
+            let mark = 'O';
+            let cnt = 0;
+            const table_event_listener = (event) => {
+                const which_td = event.target.closest('td'); // 눌렀을 때 가장 가까운 td
+
+                if (which_td.textContent !== '') { // 빈칸이 아니라면 바꾸지 않는다.
+                    return;
+                }
+
+                which_td.textContent = mark;
+                cnt = cnt + 1;
+
+                if (checkWin(which_td) === true) {
+                    cp_result.textContent = mark + ' 가 이겼습니다!';
+
+                    // 게임이 끝났는데도 클릭이 눌려져도 event 처리를 하지 않기 위해 Listener를 없앰
+                    cp_table.removeEventListener('click', table_event_listener);
+                    return;
+                } 
+                
+                // 모든 칸이 채워졌는가? === 무승부
+                // 무승부라고 출력하고, removeEventListener
+
+                // 첫번째 방법
+                // cnt 가 9개 즉, 모든 칸이 다찬 9개가 되었을 때
+                // if (cnt === 9) { 
+                //     cp_result.textContent = '무승부 입니다.';
+                //     cp_table.removeEventListener('click', table_event_listener);
+                //     return;
+                // }
+
+                // 두번째 방법
+                // flat 으로 2차원 배열인 board를 1차원 배열로 만듬
+                // _td 에 text 가 모두 차있다면
+                // 배열을 1차원으로 만들고 이에 대한 요소를 다 검사
+
+                // 첫번째 방법이 더 효율적
+                if (board.flat().every((_td) => _td.textContent !== '') === true) {
+                    cp_result.textContent = '무승부 입니다.';
+                    cp_table.removeEventListener('click', table_event_listener);
+                    return;
+                };
+
+                // mark  = (mark === 'O')?'X':'O';
+                if (mark === 'O') {
+                    mark = 'X';
+                }
+                else {
+                    mark = 'O';
+                }
+
+
+            };
+
+            // td 들을 저장하기 위한 별도의 2차원 배열
+            const board = [];
+
+            // 3 X 3 table
+            // table 안의 요소 생성
+            for (let i = 0; i < 3; i++) { // tr
+                const cp_tr = document.createElement('tr');
+                const t_row = [];
+                for (let j = 0; j < 3; j++) {// td
+                    const cp_td = document.createElement('td');
+                    cp_tr.append(cp_td);
+                    t_row.push(cp_td);
+                }
+                board.push(t_row);
+                cp_table.append(cp_tr);
+            }
+        
+            // 만든 요소를 body 에 추가 시킨다.
+            document.body.append(cp_table);
+            document.body.append(cp_result);
+
+
+            cp_table.addEventListener('click', table_event_listener);
+        </script>
+    
+    </body>
+</html>

@@ -1,0 +1,80 @@
+<html>
+    <head>
+
+    </head>
+
+    <body>
+        <script>
+
+            const myArray = [1, 2, 'apple', 'banana', 3.14, true, false, 2 ,'apple'];
+
+            // * includes
+            // 배열에 원하는 데이터가 있는 지 확인, 있다면 true 없으면 false
+            console.log(myArray.includes('apple')); // 'apple' 이 있으므로 true
+
+
+            // * indexOf : 있으면 해당 index, 없으면 -1
+            console.log(myArray.indexOf('apple')); // 2;
+            console.log(myArray.indexOf('orange')); // -1;
+
+            // indexOf('apple', fromindex) fromindex 로 어디서부터 찾을 건인지 설정할 수 있다.
+            console.log(myArray.indexOf('apple', 0)); // 2;
+            console.log(myArray.indexOf('apple', 3)); // 8;
+            console.log(myArray.indexOf('apple', 2)); // 8;
+
+            // lastIndexOf('apple', fromindex) 배열에서 'apple' 이 여러 개일 경우 마지막 찾은 인덱스를 반환
+            // fromindex 로 뒤에서 부터 시작해서 찾는다. 즉 인덱스 8이면 8, 7, 6, 5 순서로 찾는다.
+            console.log(myArray.lastIndexOf('apple'));  // 8;
+            console.log(myArray.lastIndexOf('apple', 7));  // 2;
+
+            // * 배열 퀴즈
+            // 1. 배열에 포함된 모든 사과를 제거하시오.
+            // indexOf 로 사과를 찾기, splice 로 제거, indexOf 로 사과가 나오지 않을 때까지 반복
+
+            console.log('With apple : ' + myArray);
+
+            while(true) {
+                let _idx = myArray.indexOf('apple');
+
+                // 탈출 조건
+                if (_idx === -1)
+                    break;
+                
+                myArray.splice(_idx, 1);
+                
+            }
+            
+            console.log('Without apple : ' + myArray);
+
+            // 2. 배열에 포함된 사과의 개수는?
+
+            // 방법 1
+            let cnt = 0;
+            let _idx = 0;
+
+            while (true) {
+                _idx = myArray.indexOf('apple' , _idx);
+
+                if (_idx === -1)
+                    break;
+                
+                cnt++;
+                _idx++; // 다음 사과를 찾는 것은 마지막 찾은 위치 다음으로
+            }
+            
+            console.log('사과 개수는 : ' + cnt);
+
+            // 방법 2
+            for(let i = 0; i < myArray.length; i++) {
+                if (myArray[i] === 'apple')
+                    cnt++;
+            }
+
+            console.log('사과 개수는 : ' + cnt);
+
+            
+
+        </script>
+
+    </body>
+</html>
