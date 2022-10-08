@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.7.0/chart.min.js"></script>
+        <!-- chart.min.js 로 chart.js 의 용량이 작은 버전 -->
+    </head>
+    <body>
+        <canvas id="myChart" width="400" height="320"></canvas>
+
+    </body>
+
+    <!-- chart.js 의 예제를 따라 만들어보기 -->
+    <script>
+        const labels = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'June']
+        const data = {
+            labels : labels,
+            datasets : [{
+                label : 'My First dataset',
+                borderColor : 'rgb(255,99,132)',
+                data : [0, 10, 5, 2, 20, 30]
+            }]
+        }           
+        const config = {
+            type : 'line',
+            data : data,
+            options : {
+                responsive : true, // 웹페이지 크기에 따라 변화
+                maintainAspectRation:false
+            }
+        }
+        const MyChart = new Chart(document.getElementById('myChart'), config) 
+    </script>
+
+
+</html>

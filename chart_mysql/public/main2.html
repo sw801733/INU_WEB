@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<!-- 빌딩 번호로 구분하여 그래프 그리기 -->
+<html>
+    <head>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.7.0/chart.min.js"></script>
+
+    </head>
+    <body>
+        <div>
+            <canvas id="myChart" width="400" height="320"></canvas>
+        </div>
+        <div>
+            <label>빌딩 아이디</label>
+            <input type="text" id="building_id">
+            <!-- 버튼을 통해 내가 원하는 데이터의 그래프를 그리기 -->
+            <button id="chartdatafromdb">그래프그리기</button>
+        </div>
+
+    </body>
+
+
+    <script>
+        let myChart = undefined
+        const btn = document.getElementById('chartdatafromdb')
+        const bid = document.getElementById('building_id')
+
+        btn.addEventListener('click', () => {
+
+            // 입력된 building_id 를 추출한다.
+            console.log('building_id : %s', bid.value)
+
+            // svr.js 에 데이터를 요청하고 데이터를 받아서 그래프를 그린다.
+            chartDataFromDB(bid.value)
+        })
+
+        const chartDataFromDB = (bid) => {
+
+            // 서버에 데이터 요청
+            fetch('/chartdatafromdbwithbid', {
+                method : 'post',
+                headers : {
+                    'content-type' : 'application/json'
+                },
+                // body 로 서버에 bid 를 전송하는데 이때 JSON 으로 변환하여 보낸다.
+                body : JSON.stringify({
+                    'bid' : bid
+                })
+            }).then((res)=>res.json()) // .then으로 response 가 들어왔을 떄 실행
+            // json 데이터를 받았으므로 들어온 res의 json을 꺼내고
+            // 이제 꺼낸 json은 다시 then 의 res로 들어간다.
+            .then((res)=>{
+                // 받아온 데이터(res)를 가지고, 그래프를 그린다.
+
+                // 받아온 결과가 ok 가 아니면 코드를 끝낸다.
+                if (res.result != 'ok') {
+                    console.log('result is not ok')
+                    return;
+                }
+
+                // x 축과 y축을 위한 데이터 분리
+                let reg_data_obj = []   // x축
+                let temp_obj = []       // y축
+
+                // 그래프를 그리기 위해 reg_data_obj 와 temp_obj 를 만든다.
+                for(let i = 0; i < res.temp.length; i++) {
+                    reg_data_obj.push(res.reg_data[i])
+                    temp_obj.push(res.temp[i])
+                }
+
+                // 그래프 그리기 위한 준비
+                const data = {
+                    labels: reg_data_obj,
+                    datasets : [{
+                        label: '온도',
+                        borderColor: 'rgb(255,99,132)',
+                        data: temp_obj
+                    }]
+
+                }
+                const config = {
+                    type: 'line',
+                    data: data,
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: false
+                    }
+                }
+                // 진짜로 그래프 그리기
+                
+                // 이미 그려진 그래프가 있다면 기존 그래프를 지우고 새로운 그래프 그리기
+                // 기존 그래프가 남아있는 경우 새로운 그래프를 그리기가 불가능하기 때문에
+                if (myChart !== undefined) {
+                    myChart.destroy()
+                }
+                myChart = new Chart(document.getElementById('myChart'), config)
+            })
+
+
+        }
+
+    </script>
+
+
+</html>
