@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>CANVAS IMAGE Databse Node</title>
+    </head>
+    <body>
+
+        <div>
+            <canvas id="my_canvas" width="2000" height="2000"></canvas>
+        </div>
+
+    </body>
+    <script>
+        const my_canvas = document.getElementById('my_canvas')
+        const ctx = my_canvas.getContext('2d')
+
+        const response = fetch('/getimgfromdb', {
+            method:'post',
+            headers : {
+                'content-type' : 'application/json'
+            }
+        }).then((res)=>res.json())
+        // await 로 기다리기 위해선 함수선언에 async 가 필요하다.
+        .then(async (res)=> {
+            // 서버에서 받은 이미지를 풀어서 보여주는 부분
+            // DB 에서 result 로 받은 값 중에서 0 번째의 img 안에 들어있는 data 를  Uint8array 로 변환한다.
+            const binary = new Uint8Array(res['result'][0]['img']['data'])
+            
+            // 웹페이지에 보여주기 위한 이미지 만들기
+            // 1차원으로 저장된 사진을 보여주기 위해 2차원 이미지로 다시 만든다.
+            const blob = new Blob([binary], {type:'image/jpeg'})
+            const kimg = new Image() // 빈 이미지
+
+            // 빈 이미지에 DB 에서 가져온 사진을 대입
+            kimg.src = URL.createObjectURL(blob)
+
+            // 압축을 해제하고 이 작업이 다 될때까지 대기한다.
+            const imgLoadingDone = await kimg.decode()
+            ctx.drawImage(kimg,0,0, 400, 400) // 뒤의 마지막 인자 2개는 이미지를 resizing
+
+        })
+
+    </script>
+</html>
