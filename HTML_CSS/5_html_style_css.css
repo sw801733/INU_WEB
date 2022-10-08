@@ -1,0 +1,16 @@
+/* div 태그 중 first에 대해 꾸미겠다. # : selector */
+div#first {
+            /* 속성    :   속성값;  */
+    background-color: lime;
+}
+div#second{
+    background-color: cadetblue;
+}
+div#third{
+    background-color: yellow;
+}
+
+/* class로 구분하기 위해선 . 을 사용 */
+/* div.divclass{ 
+    background-color: lime;
+} */

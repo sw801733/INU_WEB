@@ -1,0 +1,28 @@
+/* div 태그 중 first에 대해 꾸미겠다. # : selector */
+
+
+/* css 파일에서 width를 설정했음에도 division의 영역은 가득 차있다. */
+/* 이를 위해 display inline-block으로 width 만큼 설정한 크기만큼 영역을 차지한다. */
+
+
+div#first {
+    /* 속성    :   속성값;  */
+    background-color: lime;
+    display: inline-block;
+    width: 500px; /* 단위는 pixel */
+}
+div#second{
+    background-color: cadetblue;
+    display: inline-block;
+    width: 600px;
+}
+div#third{
+    background-color: yellow;
+    display: inline-block;
+    width: 700px;
+}
+
+/* class로 구분하기 위해선 . 을 사용 */
+/* div.divclass{ 
+background-color: lime;
+} */

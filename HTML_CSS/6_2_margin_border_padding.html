@@ -1,0 +1,38 @@
+<!-- margin 은 자신을 감싸고 있는 것과의 간격 -->
+<!-- 제일 바깥인 outer division은 웹페이지로부터 inner division은 outer 로 부터 -->
+<!-- border 는 div에 박스 영역 -->
+<!-- padding 자신의 크기를 키우는 것 -->
+
+<!-- display의 default 는 block (가로는 끝까지) 이고 inline-block은 자신이 표현하는 내용 크기만 -->
+<html>
+    <head>
+        <style>
+            div#outer {
+                display: inline-block;
+                background-color: blueviolet;
+                margin: 100px;
+                border: 2px solid #ff0000;
+            }
+            div#inner {
+                display: inline-block;
+                background-color: aqua;
+                /* margin: 50px ; 상하, 좌우 모두*/
+                /* margin: 50px 10px; 상하, 좌우 각각*/
+                /* margin: 50px 10px 90px; 상, 좌우, 하 각각 */
+                margin: 50px 10px 90px 100px; /* 상, 우, 하, 좌 각각 */
+                /* padding 도 마찬가지 */
+                padding: 100px;
+            }
+        </style>
+    </head>
+
+    <body>
+
+        <div id="outer">
+            <div id="inner">
+                HELLO
+            </div>
+        </div>
+
+    </body>
+</html>
