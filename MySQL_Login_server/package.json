@@ -1,0 +1,19 @@
+{
+  "name": "mysql_login_server",
+  "version": "1.0.0",
+  "description": "",
+  "main": "svr.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.18.1",
+    "mysql": "^2.18.1",
+    "path": "^0.12.7",
+    "promise-mysql": "^5.2.0",
+    "serve-static": "^1.15.0"
+  }
+}
